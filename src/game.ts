@@ -1,3 +1,7 @@
+import CryptoJS from 'crypto-js'
+import dayjs from 'dayjs'
+import KEY from './key'
+
 function chunk(arr: any[], num: number) {
     let result = []
     for (var index = 0; index < arr.length; index += num) {
@@ -28,17 +32,19 @@ const valid = (p: Point) => validAxis(p.row) && validAxis(p.col)
 export default class Game {
     board: number[][]
     white: Point
+    startTime: number
     constructor() {
         this.board = createBoard()
         this.white = {
             row: 7, col: 7
         }
         this.shuffle()
+        this.startTime = new Date().valueOf()
     }
 
     shuffle() {
         console.time('shuffle')
-        for (let i = 1; i <= 4000; i++) {
+        for (let i = 1; i <= 1; i++) {
             let arounds = shuffle(this.getAround(this.white))
             this.step(arounds[0])
         }
@@ -55,6 +61,10 @@ export default class Game {
     }
 
     step(pnt: Point) {
+        const distance = (xA: number, yA: number, xB: number, yB: number) => Math.sqrt(Math.pow(xA - xB, 2) + Math.pow(yA - yB, 2))
+        if (distance(pnt.col, pnt.row, this.white.col, this.white.row) !== 1) {
+            return;
+        }
         this.board[this.white.row][this.white.col] = this.board[pnt.row][pnt.col]
         this.board[pnt.row][pnt.col] = 0
         this.white = pnt
@@ -62,6 +72,21 @@ export default class Game {
 
     finished(): boolean {
         const flatted = this.board.flat().filter(v => v)
-        return flatted.slice(1).map((v, i) => v - flatted[i]).filter(v => v === 1).length === 62
+        return flatted.slice(1).map((v, i) => v - flatted[i]).filter(v => v === 1).length === 62 && this.board[7][7] === 0
     }
+
+    generate() {
+        let usage = new Date().valueOf() - this.startTime
+        const str = `end: ${dayjs().format()}\nusage: ${usage / 1000}s`
+        let c = CryptoJS.Rabbit.encrypt(str, KEY).toString()
+        return [c, usage / 1000]
+    }
+}
+
+export const toPoint = (index: number) => {
+    let p: Point = {
+        row: Math.floor(index / 8),
+        col: index % 8
+    }
+    return p
 }
