@@ -3,18 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build && node obf.js",
     "serve": "vite preview"
   },
   "dependencies": {
-    "crypto-js": "^4.0.0",
+    "crypto-es": "^1.2.7",
     "dayjs": "^1.10.4",
+    "glob": "^7.1.6",
     "javascript-obfuscator": "^2.12.0",
-    "rollup-plugin-obfuscator": "^0.2.0",
     "vue": "^3.0.11"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.0.1",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
     "typescript": "^4.2.4",

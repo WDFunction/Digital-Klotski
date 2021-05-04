@@ -1,4 +1,5 @@
-import CryptoJS from 'crypto-js'
+// @ts-ignore
+import {Rabbit} from 'crypto-es/lib/rabbit'
 import dayjs from 'dayjs'
 import KEY from './key'
 
@@ -78,7 +79,7 @@ export default class Game {
     generate() {
         let usage = new Date().valueOf() - this.startTime
         const str = `end: ${dayjs().format()}\nusage: ${usage / 1000}s`
-        let c = CryptoJS.Rabbit.encrypt(str, KEY).toString()
+        let c = Rabbit.encrypt(str, KEY).toString()
         return [c, usage / 1000]
     }
 }
