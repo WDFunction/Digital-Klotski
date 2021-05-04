@@ -3,9 +3,13 @@
 </template>
 
 <script lang="ts">
+import Game from './game'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  mounted(){
+    let g = new Game()
+  }
 })
 </script>
