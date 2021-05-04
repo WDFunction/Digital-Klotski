@@ -43,7 +43,6 @@ export default class Game {
             this.step(arounds[0])
         }
         console.timeEnd('shuffle')
-        console.log(this.board)
     }
 
     getAround(pnt: Point): Point[] {
@@ -59,5 +58,10 @@ export default class Game {
         this.board[this.white.row][this.white.col] = this.board[pnt.row][pnt.col]
         this.board[pnt.row][pnt.col] = 0
         this.white = pnt
+    }
+
+    finished(): boolean {
+        const flatted = this.board.flat().filter(v => v)
+        return flatted.slice(1).map((v, i) => v - flatted[i]).filter(v => v === 1).length === 62
     }
 }
