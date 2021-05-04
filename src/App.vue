@@ -13,7 +13,7 @@
     </div>
     <div class="finished" v-if="finished">
       <h1>用时: {{ finishedData[1] }}s</h1>
-      <img :src="`https://qr.wd-api.com/?data=${finishedData[0]}`" /><br/>
+      <img :src="`https://qr.wd-api.com/?data=${finishedData[0]}`" /><br />
       <h2 style="padding-bottom: 1em;">复制下方文本框内容</h2>
       <input readonly :value="finishedData[0]" />
     </div>
@@ -25,11 +25,11 @@ import Game, { toPoint } from "./game";
 import { onMounted, ref } from "vue";
 const game = new Game();
 
-const board = ref<number[]>(null);
+const board = ref<number[]>([]);
 let finished = ref(false);
-let finishedData = ref(null);
+let finishedData = ref(["", 0]);
 
-const handleClick = (index) => {
+const handleClick = (index: number) => {
   game.step(toPoint(index));
   updateBoard();
 };
