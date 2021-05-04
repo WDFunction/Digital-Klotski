@@ -45,7 +45,7 @@ export default class Game {
 
     shuffle() {
         console.time('shuffle')
-        for (let i = 1; i <= 1; i++) {
+        for (let i = 1; i <= 4000; i++) {
             let arounds = shuffle(this.getAround(this.white))
             this.step(arounds[0])
         }
