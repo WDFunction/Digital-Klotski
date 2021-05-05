@@ -44,12 +44,10 @@ export default class Game {
     }
 
     shuffle() {
-        console.time('shuffle')
         for (let i = 1; i <= 4000; i++) {
-            let arounds = shuffle(this.getAround(this.white))
-            this.step(arounds[0])
+            let arounds = this.getAround(this.white)
+            this.step(arounds[Math.floor(Math.random() * arounds.length)])
         }
-        console.timeEnd('shuffle')
     }
 
     getAround(pnt: Point): Point[] {
