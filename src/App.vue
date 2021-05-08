@@ -13,8 +13,11 @@
     </div>
     <div class="finished" v-if="finished">
       <h1>用时: {{ finishedData[1] }}s</h1>
+      <h1 v-if="finishedData[1] <= 300">
+        {{ FLAG }}
+      </h1>
       <img
-        :src="`https://qr.wd-api.com/?data=${finishedData[0]}&white`"
+        :src="`https://qr.wd-api.com/?data=${encodeURIComponent(finishedData[0])}&white`"
       /><br />
       <h2 style="padding-bottom: 1em;">复制下方文本框内容</h2>
       <input readonly :value="finishedData[0]" />
@@ -25,6 +28,7 @@
 <script lang="ts" setup>
 import Game, { toPoint } from "./game";
 import { onMounted, ref } from "vue";
+import {FLAG} from './key'
 const game = new Game();
 
 const board = ref<number[]>([]);
@@ -77,6 +81,7 @@ onMounted(() => {
   grid-template-rows: repeat(8, 1fr);
   grid-gap: 3px;
   margin: 0px auto;
+  max-width: calc(100vh - 100px)
 }
 .finished {
   margin-top: 20px;
@@ -86,7 +91,7 @@ onMounted(() => {
   font-size: 2em;
 }
 #super_container {
-  font-family: 'Rubik', sans-serif;
-  padding: 20px
+  font-family: "Rubik", sans-serif;
+  padding: 20px;
 }
 </style>
